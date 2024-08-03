@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SearchModal from './SearchModal';
-import { dataContext } from '../hooks/DataProvider';
+import { dataContext } from '../hook/DataProvider';
 import { WeatherCard } from './WeatherCard';
 
 function Modal() {

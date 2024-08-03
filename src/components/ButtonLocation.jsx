@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { dataContext } from '../hooks/DataProvider';
+import { dataContext } from '../hook/DataProvider';
+import LocationCrosshairsIcon from '../assets/location-crosshairs.svg'; 
 
 export const ButtonLocation = () => {
     const { setLocation } = useContext(dataContext);
-    const [geolocation, setGeoLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState("");
 
-    
     const success = (position) => {
         const { latitude, longitude } = position.coords;
-        setGeoLocation({ latitude, longitude });
-        setErrorMsg(""); 
+        setLocation({
+            lat: latitude,
+            lon: longitude,
+        });
+        setErrorMsg("");
     };
 
-    
     const error = (err) => {
         console.error(`ERROR(${err.code}): ${err.message}`);
         setErrorMsg("Unable to retrieve your location. Please check your settings.");
@@ -25,7 +26,6 @@ export const ButtonLocation = () => {
         timeout: 27000,
     };
 
-    
     const handleClick = () => {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(success, error, options);
@@ -34,14 +34,14 @@ export const ButtonLocation = () => {
         }
     };
 
+    
     useEffect(() => {
-        if (geolocation) {  
-            setLocation({
-                lat: geolocation.latitude,
-                lon: geolocation.longitude,
-            });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        } else {
+            setErrorMsg("Geolocation is not supported by this browser.");
         }
-    }, [geolocation, setLocation]); 
+    }, []); 
 
     return (
         <div>
@@ -49,20 +49,7 @@ export const ButtonLocation = () => {
                 className="text-white mt-10 mr-5"
                 onClick={handleClick}
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 2.25c5.376 0 9.75 4.374 9.75 9.75s-4.374 9.75-9.75 9.75S2.25 17.376 2.25 12 6.624 2.25 12 2.25zm0 4.5a.75.75 0 100 1.5.75.75 0 000-1.5zM12 8.25a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5zm0 4.5a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                    />
-                </svg>
+                <img src={LocationCrosshairsIcon} alt="Location Icon" className="w-6 h-6" />
             </button>
             {errorMsg && (
                 <div className="text-red-500 mt-2">

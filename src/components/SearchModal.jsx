@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { dataContext } from '../hooks/DataProvider';
+import { dataContext } from '../hook/DataProvider';
 
 function SearchModal({ isModalOpen, toggleModal, location, setLocation }) {
     const { getDataByCty } = useContext(dataContext); 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { DataProvide } from './hooks/DataProvider'
+import { DataProvide } from './hook/DataProvider'
 import { ClimateTime } from './components/ClimateTime'
 import Modal from './components/Modal'
 

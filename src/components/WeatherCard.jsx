@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonLocation } from './ButtonLocation';
-import cloude from '../asset/Cloud-background.png';
+import cloude from '../assets/Cloud-background.png';
 
 export const WeatherCard = ({ data, toggleModal }) => {
   const [currentTemperature, setCurrentTemperature] = useState('');
   const [currentWeatherDescription, setCurrentWeatherDescription] = useState('');
   const [currentDate, setCurrentDate] = useState('');
-  const [currentWindDirection, setCurrentWindDirection] = useState(0);
 
   useEffect(() => {
     const updateWeather = () => {
@@ -22,11 +21,9 @@ export const WeatherCard = ({ data, toggleModal }) => {
 
       const temperature = kelvinToCelsius(currentWeather.main.temp);
       const weatherDescription = currentWeather.weather[0].description;
-      const windDirection = currentWeather.wind.deg || 0; 
 
       setCurrentTemperature(temperature.toFixed(2));
       setCurrentWeatherDescription(weatherDescription);
-      setCurrentWindDirection(windDirection); 
       setCurrentDate(getCurrentDate());
     };
 
@@ -83,13 +80,16 @@ export const WeatherCard = ({ data, toggleModal }) => {
 
       <div className="text-[#88869D] text-center mb-4">
         <p className="text-sm md:text-lg">{currentDate}</p>
-        <div className="flex justify-center mt-4 md:mt-10">
+        <div className="flex justify-center items-center mt-4 md:mt-10">
+          {}
+          <span className="text-sm md:text-base">
+            {data && data.city && data.city.name ? data.city.name : 'Select a location'}
+          </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="w-6 h-6 md:w-8 md:h-8 mr-2"
-            style={{ transform: `rotate(${currentWindDirection}deg)` }}
+            className="w-6 h-6 md:w-8 md:h-8 ml-2"
           >
             <path
               fillRule="evenodd"
@@ -97,7 +97,6 @@ export const WeatherCard = ({ data, toggleModal }) => {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-sm md:text-base">{data && data.city && data.city.name ? data.city.name : 'Select a location'}</span>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { dataContext } from '../hooks/DataProvider';
+import { dataContext } from '../hook/DataProvider';
 import { TimeAnalisys } from './TimeAnalisys';
 
 export const ClimateTime = () => {
